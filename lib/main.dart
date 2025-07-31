@@ -97,20 +97,19 @@ class _MyHomePageState extends State<MyHomePage> {
               SafeArea(
                 child: Column(
                   children: [
-                    // Burger menu button
-                    IconButton(
-                      icon: Icon(Icons.menu),
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () {
-                        setState(() {
-                          isRailExtended = !isRailExtended;
-                        });
-                      },
-                    ),
                     Expanded(
                       child: NavigationRail(
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         extended: isRailExtended,
+                        leading: IconButton(
+                          icon: Icon(Icons.menu),
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          onPressed: () {
+                            setState(() {
+                              isRailExtended = !isRailExtended;
+                            });
+                          },
+                        ),
                         destinations: [
                           NavigationRailDestination(
                             icon: Icon(
@@ -182,7 +181,7 @@ class GeneratorPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BigCard(pair: pair),
-          SizedBox(height: 10),
+          SizedBox(height: 12),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -193,7 +192,7 @@ class GeneratorPage extends StatelessWidget {
                 icon: Icon(favoriteIcon),
                 label: Text('Like'),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 12),
               ElevatedButton(
                 onPressed: () {
                   appState.getNext();
@@ -208,12 +207,7 @@ class GeneratorPage extends StatelessWidget {
   }
 }
 
-class FavoritePage extends StatefulWidget {
-  @override
-  State<FavoritePage> createState() => _FavoritePageState();
-}
-
-class _FavoritePageState extends State<FavoritePage> {
+class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
