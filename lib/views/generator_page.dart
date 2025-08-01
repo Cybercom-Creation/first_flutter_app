@@ -17,20 +17,25 @@ class GeneratorPage extends StatelessWidget {
         children: [
           BigCard(pair: pair),
           const SizedBox(height: 12),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: controller.toggleFavorite,
-                icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
-                label: const Text('Like'),
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton(
-                onPressed: controller.getNext,
-                child: const Text('Next'),
-              ),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: controller.toggleFavorite,
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                  ),
+                  label: const Text('Like'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton(
+                  onPressed: controller.getNext,
+                  child: const Text('Next'),
+                ),
+              ],
+            ),
           ),
         ],
       ),

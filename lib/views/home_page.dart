@@ -12,6 +12,18 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isRailExtended = true;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final isMobile = MediaQuery.of(context).size.width < 600;
+    // Only set on first build to avoid resetting on every rebuild
+    if (isRailExtended != !isMobile) {
+      setState(() {
+        isRailExtended = !isMobile;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget page = selectedIndex == 0 ? GeneratorPage() : FavoritePage();
 
@@ -20,31 +32,34 @@ class _MyHomePageState extends State<MyHomePage> {
         return Scaffold(
           body: Row(
             children: [
-              SafeArea(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: NavigationRail(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        extended: isRailExtended,
-                        leading: IconButton(
-                          icon: const Icon(Icons.menu),
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          onPressed: () {
-                            setState(() => isRailExtended = !isRailExtended);
+              Container(
+                color: Theme.of(context).colorScheme.primary,
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: NavigationRail(
+                          backgroundColor: Colors.transparent,
+                          extended: isRailExtended,
+                          leading: IconButton(
+                            icon: const Icon(Icons.menu),
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            onPressed: () {
+                              setState(() => isRailExtended = !isRailExtended);
+                            },
+                          ),
+                          destinations: [
+                            navDestination(Icons.home_outlined, 'Home'),
+                            navDestination(Icons.favorite_border, 'Favorites'),
+                          ],
+                          selectedIndex: selectedIndex,
+                          onDestinationSelected: (index) {
+                            setState(() => selectedIndex = index);
                           },
                         ),
-                        destinations: [
-                          navDestination(Icons.home_outlined, 'Home'),
-                          navDestination(Icons.favorite_border, 'Favorites'),
-                        ],
-                        selectedIndex: selectedIndex,
-                        onDestinationSelected: (index) {
-                          setState(() => selectedIndex = index);
-                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Expanded(
